@@ -32,34 +32,11 @@ class CalcLater {
     private var inputSequence = [CalcLaterSymbol]()
     private var expressionEngine = CalcLaterEngine()
     var computedOutput: String?
-    
-    // MARK: ComputedState
-    private var inputSequenceContainsArithmeticOperator: Bool {
-        return inputSequence.reduce(false) { CalcLaterSymbol.arithmeticOperatorSet().contains($1) || $0 }
-    }
-    private var inputLastIsDecimal: Bool {
-        if let last = inputSequence.last { return last == .DecimalSign }
-        return false
-    }
-    
-    private var inputLastIsDigit: Bool {
-        if let tail = inputSequence.last { return CalcLaterSymbol.isDigit(tail) }
-        return false
-    }
 
     var clearIsValidInput: Bool {
-        return inputLastIsDecimal || inputLastIsDigit
+        return CalcLaterSymbol.lastIsDecimal(inputSequence) || CalcLaterSymbol.lastIsDigit(inputSequence)
     }
-    
-    var inputLastIsEquals: Bool {
-        if let last = inputSequence.last { return last == .EqualsSign }
-        return false
-    }
-    
-    var inputTailDigitSequenceContainsDecimal: Bool {
-        return CalcLater.symbolSequenceTailDigitSequenceContainsDecimal(inputSequence)
-    }
-    
+
     //MARK: Input
     func input(symbol: CalcLaterSymbol) {
         // this function should only route input
@@ -82,8 +59,11 @@ class CalcLater {
     private func inputEquals() {
         guard let lastSymbol = inputSequence.last else { return }
         
-        if (CalcLaterSymbol.isDigit(lastSymbol) || inputLastIsEquals || inputLastIsDecimal) && inputSequenceContainsArithmeticOperator {
-            if inputLastIsDecimal { inputSequence.removeLast() }
+        if (lastSymbol.isDigit() ||
+            CalcLaterSymbol.lastIsEquals(inputSequence) ||
+            CalcLaterSymbol.lastIsDecimal(inputSequence)) &&
+            CalcLaterSymbol.containsArithmeticOperator(inputSequence) {
+            if CalcLaterSymbol.lastIsDecimal(inputSequence) { inputSequence.removeLast() }
             inputSequence.append(.EqualsSign)
         }
     }
@@ -93,7 +73,7 @@ class CalcLater {
     }
 
     private func inputClear() {
-        if inputLastIsDigit || inputLastIsDecimal {
+        if CalcLaterSymbol.lastIsDigit(inputSequence) || CalcLaterSymbol.lastIsDecimal(inputSequence) {
             inputSequence.removeLast()
             inputClear()
         }
@@ -116,9 +96,9 @@ class CalcLater {
     }
     
     private func inputDecimal() {
-        if inputTailDigitSequenceContainsDecimal {
+        if CalcLaterSymbol.tailDigitSequenceContainsDecimal(inputSequence) {
             return
-        } else if !inputLastIsDigit {
+        } else if !CalcLaterSymbol.lastIsDigit(inputSequence) {
             inputSequence.append(.Zero)
         }
         inputSequence.append(.DecimalSign)
@@ -126,21 +106,6 @@ class CalcLater {
 
     private func inputDigit(symbol: CalcLaterSymbol) {
         inputSequence.append(symbol)
-    }
-    
-    //MARK: Utility
-    static func symbolSequenceTailDigitSequenceContainsDecimal(symbolSequence: [CalcLaterSymbol]) -> Bool {
-        if let last = symbolSequence.last {
-            if last == .DecimalSign {
-                return true
-            } else if CalcLaterSymbol.isDigit(last) {
-                return symbolSequenceTailDigitSequenceContainsDecimal(Array(symbolSequence.dropLast()))
-            } else {
-                return false
-            }
-        } else {
-            return false
-        }
     }
     
 }

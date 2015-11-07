@@ -10,8 +10,10 @@ import Foundation
 
 struct CalcLaterEngine: ExpressionEngine {
     
-    static func computeExpressionValue(symbols: [CalcLaterSymbol]) -> (symbols: [CalcLaterSymbol], computedOutput: String) {
-        return (symbols: symbols, computedOutput: "TEST")
+    static func computeExpressionValue(symbols: [CalcLaterSymbol]) -> String {
+        guard let last = symbols.last else { return "" }
+//        if CalcLaterSymbol.lastIsDigit(<#T##sequence: [CalcLaterSymbol]##[CalcLaterSymbol]#>)
+        return "TEST"
     }
     
 }

@@ -34,15 +34,16 @@ enum CalcLaterSymbol: String {
     case NegateSign = "+/-"
     case NegativeSign = "~"
     
-    static func arithmeticOperatorSet() -> Set<CalcLaterSymbol> {
-        return [
-        .PlusSign,
-        .MinusSign,
-        .MultiplySign,
-        .DivideSign]
-    }
+}
+
+extension CalcLaterSymbol {
+    static let arithmeticOperatorSet: Set<CalcLaterSymbol> = [
+            .PlusSign,
+            .MinusSign,
+            .MultiplySign,
+            .DivideSign]
     
-    static func isDigit(symbol: CalcLaterSymbol) -> Bool {
+    func isDigit() -> Bool {
         let digitSet: Set<CalcLaterSymbol> = [
             .Zero,
             .One,
@@ -55,7 +56,86 @@ enum CalcLaterSymbol: String {
             .Eight,
             .Nine,
         ]
-        return digitSet.contains(symbol)
+        return digitSet.contains(self)
     }
     
+    static func lastIsDigit(sequence: [CalcLaterSymbol]) -> Bool {
+        if let last = sequence.last { return last.isDigit() }
+        return false
+    }
+    
+    static func lastIsDecimal(sequence: [CalcLaterSymbol]) -> Bool {
+        if let last = sequence.last { return last == .DecimalSign }
+        return false
+    }
+    
+    static func lastIsEquals(sequence: [CalcLaterSymbol]) -> Bool {
+        if let last = sequence.last { return last == .EqualsSign }
+        return false
+    }
+    
+    static func containsArithmeticOperator(sequence: [CalcLaterSymbol]) -> Bool {
+        return sequence.reduce(false) { CalcLaterSymbol.arithmeticOperatorSet.contains($1) || $0 }
+    }
+    
+    static func tailDigitSequenceContainsDecimal(sequence: [CalcLaterSymbol]) -> Bool {
+        if let last = sequence.last {
+            if last == .DecimalSign {
+                return true
+            } else if last.isDigit() {
+                return tailDigitSequenceContainsDecimal(Array(sequence.dropLast()))
+            } else {
+                return false
+            }
+        } else {
+            return false
+        }
+    }
+    
+    static func tailDigitSequence(sequence: [CalcLaterSymbol]) -> [CalcLaterSymbol] {
+        guard let last = sequence.last else { return [] }
+        if last.isDigit() || last == .DecimalSign {
+            return tailDigitSequence(Array(sequence.dropLast())) + [last]
+        } else {
+            return []
+        }
+    }
 }
+
+
+//TODO: Attempt at extending [CalcLaterSymbol]. This would be better than the current solution
+
+//extension Array where Element: CalcLaterSymbol {
+//    func lastIsDigit() -> Bool {
+//        if let last = self.last { return isDigit(last) }
+//    }
+//    
+//    func lastIsDecimal() -> Bool {
+//        if let last = self.last { return last == .DecimalSign }
+//    }
+//    
+//    func lastIsEquals() -> Bool {
+//        if let last = self.last { return last == .EqualsSign }
+//    }
+//    
+//    func containsArithmeticOperator() -> Bool {
+//        return sequence.reduce(false) { CalcLaterSymbol.arithmeticOperatorSet().contains($1) || $0 }
+//    }
+//    
+//    func tailDigitSequenceContainsDecimal() -> Bool {
+//        if let last = self.last {
+//            if last == .DecimalSign {
+//                return true
+//            } else if CalcLaterSymbol.isDigit(last) {
+//                return symbolSequenceTailDigitSequenceContainsDecimal(Array(self.dropLast()))
+//            } else {
+//                return false
+//            }
+//        } else {
+//            return false
+//        }
+//    }
+//}
+
+
+
