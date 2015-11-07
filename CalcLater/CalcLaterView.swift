@@ -9,13 +9,17 @@
 import UIKit
 
 protocol CalcLaterViewDelegate: class {
-    func calcLaterButtonTappedWithText(buttonText: String)
+    func calcLaterButtonTappedWithSymbol(symbol: CalcLaterSymbol)
 }
 
 class CalcLaterView: UIView {
 
-    typealias ButtonTypeContainer = CalcLaterButton.CalcButtonTypeContainer
     weak var delegate: CalcLaterViewDelegate?
+    var clearConfiguration = true {
+        didSet {
+            clearButton?.symbol = clearConfiguration ? .ClearSign : .ClearAllSign
+        }
+    }
     
     private let outputLabelPortion: CGFloat = 0.2
     private var gridHeight: CGFloat { get { return frame.height * (1 - outputLabelPortion) / 5 } }
@@ -39,34 +43,36 @@ class CalcLaterView: UIView {
     private lazy var buttons: [CalcLaterButton] = {
         var buttons = [CalcLaterButton]()
         for index in 1...20 {
-            let button = CalcLaterButton()
-            buttons.append(button)
+            let symbol: CalcLaterSymbol
             switch index {
-            case 1:
-                button.typeContainer = .Operator("ac")
-                self.clearButton = button
-            case 2: button.typeContainer = .Operator("+/-")
-            case 3: button.typeContainer = .Operator("%")
-            case 4: button.typeContainer = .Operator("/")
-            case 5: button.typeContainer = .Digit("7")
-            case 6: button.typeContainer = .Digit("8")
-            case 7: button.typeContainer = .Digit("9")
-            case 8: button.typeContainer = .Operator("x")
-            case 9: button.typeContainer = .Digit("4")
-            case 10: button.typeContainer = .Digit("5")
-            case 11: button.typeContainer = .Digit("6")
-            case 12: button.typeContainer = .Operator("-")
-            case 13: button.typeContainer = .Digit("1")
-            case 14: button.typeContainer = .Digit("2")
-            case 15: button.typeContainer = .Digit("3")
-            case 16: button.typeContainer = .Operator("+")
-            case 17: button.typeContainer = .Digit("0")
-            case 19: button.typeContainer = .Operator(".")
-            case 20: button.typeContainer = .Operator("=")
-            default: button.typeContainer = nil
+            case 1: symbol = .ClearAllSign
+            case 2: symbol = .NegateSign
+            case 3: symbol = .PercentSign
+            case 4: symbol = .DivideSign
+            case 5: symbol = .Seven
+            case 6: symbol = .Eight
+            case 7: symbol = .Nine
+            case 8: symbol = .MultiplySign
+            case 9: symbol = .Four
+            case 10: symbol = .Five
+            case 11: symbol = .Six
+            case 12: symbol = .MinusSign
+            case 13: symbol = .One
+            case 14: symbol = .Two
+            case 15: symbol = .Three
+            case 16: symbol = .PlusSign
+            case 17: symbol = .Zero
+            case 19: symbol = .DecimalSign
+            case 20: symbol = .EqualsSign
+            default: symbol = .ClearSign
             }
+            let button = CalcLaterButton(symbol: symbol)
+            buttons.append(button)
             self.addSubview(button)
             button.addTarget(self, action: "buttonTapped:", forControlEvents: .TouchUpInside)
+            if CalcLaterSymbol.ClearAllSign == symbol {
+                self.clearButton = button
+            }
         }
         return buttons
     }()
@@ -91,12 +97,15 @@ class CalcLaterView: UIView {
         let labelReferenceFrame = CGRect(x: 0, y: 20, width: frame.width, height: frame.height * outputLabelPortion)
         outputLabel.frame = CGRectInset(labelReferenceFrame, 10, 10)
         
+        let buttonColumns = 4
+        let emptyButtonIndex = 17
+        
         for (index, button) in buttons.enumerate() {
-            let gridWidth = frame.width / 4
-            let buttonWidth = index == 17 ? gridWidth * 2 : gridWidth
+            let gridWidth = frame.width / CGFloat(buttonColumns)
+            let buttonWidth = index == emptyButtonIndex ? 0 : gridWidth
             button.frame = CGRect(
-                x: CGFloat(index % 4) * gridWidth,
-                y: keyPadRect.origin.y + CGFloat(index / 4) * gridHeight,
+                x: CGFloat(index % buttonColumns) * gridWidth,
+                y: keyPadRect.origin.y + CGFloat(index / buttonColumns) * gridHeight,
                 width: buttonWidth,
                 height: gridHeight)
         }
@@ -108,21 +117,13 @@ class CalcLaterView: UIView {
     }
     
     func setToClearAllMode(clearAll: Bool) {
-        clearButton?.typeContainer = clearAll ? .Operator(CalcLaterConstants.clearAllSign) : .Operator(CalcLaterConstants.clearSign)
+        clearButton?.symbol = clearAll ? .ClearAllSign : .ClearSign
+        
     }
     
     //MARK: CalcLaterViewDelegate
     func buttonTapped(button: CalcLaterButton) {
-        if let typeContainer = button.typeContainer {
-            switch typeContainer {
-            case .Digit (let digit):
-                //delegate?.calcLaterViewDigitTapped(digit)
-                delegate?.calcLaterButtonTappedWithText(digit)
-            case .Operator (let operatorString):
-                //delegate?.calcLaterViewOperatorTapped(operatorString)
-                delegate?.calcLaterButtonTappedWithText(operatorString)
-            }
-        }
+        delegate?.calcLaterButtonTappedWithSymbol(button.symbol)
     }
 }
 

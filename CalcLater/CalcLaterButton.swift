@@ -9,30 +9,27 @@
 import UIKit
 
 class CalcLaterButton: UIButton {
-    
-    enum CalcButtonTypeContainer {
-        case Digit(String)
-        case Operator(String)
+
+    var symbol: CalcLaterSymbol {
+        didSet {
+            setTitle(symbol.rawValue, forState: .Normal)
+        }
     }
     
-    var typeContainer: CalcButtonTypeContainer? {
-        didSet {
-            if let typeContainer = typeContainer {
-                let titleText: String
-                switch typeContainer {
-                case .Digit(let digit):
-                    titleText = digit
-                    setTitleColor(UIColor.darkGrayColor(), forState: .Normal)
-                case .Operator(let operatorString):
-                    titleText = operatorString
-                    setTitleColor(UIColor.lightGrayColor(), forState: .Normal)
-                }
-                setTitle("\(titleText)", forState: .Normal)
-            } else {
-                setTitle("", forState: .Normal)
-            }
-            
-        }
+    init(symbol: CalcLaterSymbol) {
+        self.symbol = symbol
+        super.init(frame: CGRectZero)
+        setup()
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func setup() {
+        let titleText = symbol.rawValue
+        setTitle(titleText, forState: .Normal)
+        setTitleColor(UIColor.darkGrayColor(), forState: .Normal)
     }
 
 }

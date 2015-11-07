@@ -7,16 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		880A17131BE48CB100599569 /* CalcLater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 880A17121BE48CB100599569 /* CalcLater.swift */; };
-		880A17951BE56B6800599569 /* CalcLaterConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 880A17941BE56B6800599569 /* CalcLaterConstants.swift */; };
 		8858995C1BDF015000931369 /* CalcLaterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8858995B1BDF015000931369 /* CalcLaterView.swift */; };
 		8858995F1BDF05CA00931369 /* CalcLaterButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8858995E1BDF05CA00931369 /* CalcLaterButton.swift */; };
+		88610E5E1BED9BEE00516C3E /* CalcLaterEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88610E5D1BED9BEE00516C3E /* CalcLaterEngine.swift */; };
+		8871E1541BE6CDB200AF6DB6 /* CalcLater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8871E1531BE6CDB200AF6DB6 /* CalcLater.swift */; };
 		88D0379A1BDEE6BA002BFAA9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D037991BDEE6BA002BFAA9 /* AppDelegate.swift */; };
 		88D037A11BDEE6BA002BFAA9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 88D037A01BDEE6BA002BFAA9 /* Assets.xcassets */; };
 		88D037A41BDEE6BA002BFAA9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 88D037A21BDEE6BA002BFAA9 /* LaunchScreen.storyboard */; };
 		88D037AF1BDEE6BB002BFAA9 /* CalcLaterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D037AE1BDEE6BB002BFAA9 /* CalcLaterTests.swift */; };
 		88D037BA1BDEE6BC002BFAA9 /* CalcLaterUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D037B91BDEE6BC002BFAA9 /* CalcLaterUITests.swift */; };
 		88D037C81BDEE6F2002BFAA9 /* CalcLaterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D037C71BDEE6F2002BFAA9 /* CalcLaterViewController.swift */; };
+		88FBE7851BEAD7BB00EC351A /* CalcLaterSymbols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88FBE7841BEAD7BB00EC351A /* CalcLaterSymbols.swift */; };
+		88FBE7871BEAECD200EC351A /* ExpressionEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88FBE7861BEAECD200EC351A /* ExpressionEngine.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,10 +39,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		880A17121BE48CB100599569 /* CalcLater.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalcLater.swift; sourceTree = "<group>"; };
-		880A17941BE56B6800599569 /* CalcLaterConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalcLaterConstants.swift; sourceTree = "<group>"; };
 		8858995B1BDF015000931369 /* CalcLaterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalcLaterView.swift; sourceTree = "<group>"; };
 		8858995E1BDF05CA00931369 /* CalcLaterButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalcLaterButton.swift; sourceTree = "<group>"; };
+		88610E5D1BED9BEE00516C3E /* CalcLaterEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalcLaterEngine.swift; sourceTree = "<group>"; };
+		8871E1531BE6CDB200AF6DB6 /* CalcLater.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalcLater.swift; sourceTree = "<group>"; };
 		88D037961BDEE6BA002BFAA9 /* CalcLater.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CalcLater.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		88D037991BDEE6BA002BFAA9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		88D037A01BDEE6BA002BFAA9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -53,6 +55,8 @@
 		88D037B91BDEE6BC002BFAA9 /* CalcLaterUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalcLaterUITests.swift; sourceTree = "<group>"; };
 		88D037BB1BDEE6BC002BFAA9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		88D037C71BDEE6F2002BFAA9 /* CalcLaterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalcLaterViewController.swift; sourceTree = "<group>"; };
+		88FBE7841BEAD7BB00EC351A /* CalcLaterSymbols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalcLaterSymbols.swift; sourceTree = "<group>"; };
+		88FBE7861BEAECD200EC351A /* ExpressionEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpressionEngine.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,8 +95,10 @@
 		880A17511BE510BD00599569 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				880A17121BE48CB100599569 /* CalcLater.swift */,
-				880A17941BE56B6800599569 /* CalcLaterConstants.swift */,
+				8871E1531BE6CDB200AF6DB6 /* CalcLater.swift */,
+				88FBE7841BEAD7BB00EC351A /* CalcLaterSymbols.swift */,
+				88610E5D1BED9BEE00516C3E /* CalcLaterEngine.swift */,
+				88FBE7861BEAECD200EC351A /* ExpressionEngine.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -288,12 +294,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				880A17131BE48CB100599569 /* CalcLater.swift in Sources */,
+				88610E5E1BED9BEE00516C3E /* CalcLaterEngine.swift in Sources */,
+				8871E1541BE6CDB200AF6DB6 /* CalcLater.swift in Sources */,
 				8858995C1BDF015000931369 /* CalcLaterView.swift in Sources */,
 				88D037C81BDEE6F2002BFAA9 /* CalcLaterViewController.swift in Sources */,
-				880A17951BE56B6800599569 /* CalcLaterConstants.swift in Sources */,
+				88FBE7851BEAD7BB00EC351A /* CalcLaterSymbols.swift in Sources */,
 				88D0379A1BDEE6BA002BFAA9 /* AppDelegate.swift in Sources */,
 				8858995F1BDF05CA00931369 /* CalcLaterButton.swift in Sources */,
+				88FBE7871BEAECD200EC351A /* ExpressionEngine.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

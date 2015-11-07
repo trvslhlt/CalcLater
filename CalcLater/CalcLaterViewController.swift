@@ -11,7 +11,7 @@ import UIKit
 
 class CalcLaterViewController: UIViewController, CalcLaterViewDelegate {
     
-    let calcLater = CalcLater.singleton
+    let calcLater = CalcLater.sharedInstance
     lazy var calcLaterView: CalcLaterView = {
         return CalcLaterView(superview: self.view)
     }()
@@ -19,15 +19,17 @@ class CalcLaterViewController: UIViewController, CalcLaterViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         calcLaterView.delegate = self
-        calcLater.outputUpdated = { outputText in
-            self.calcLaterView.setOutputText(outputText)
-            self.calcLaterView.setToClearAllMode(self.calcLater.isInClearAllMode)
-        }
-        calcLater.valueInput(CalcLaterConstants.initialDisplay)
+//        calcLater.outputUpdated = { outputText in
+//            self.calcLaterView.setOutputText(outputText)
+//            self.calcLaterView.setToClearAllMode(self.calcLater.isInClearAllMode)
+//        }
+//        calcLater.valueInput(CalcLaterConstants.initialDisplay)
     }
     
     //MARK: CalcLaterViewDelegate
-    func calcLaterButtonTappedWithText(buttonText: String) {
-        calcLater.valueInput(buttonText)
+
+    func calcLaterButtonTappedWithSymbol(symbol: CalcLaterSymbol) {
+        calcLater.input(symbol)
+        calcLaterView.clearConfiguration = calcLater.clearIsValidInput
     }
 }

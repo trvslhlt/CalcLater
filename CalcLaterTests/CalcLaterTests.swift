@@ -13,24 +13,45 @@ class CalcLaterTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
     }
     
     override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
+        CalcLater.sharedInstance.input(CalcLaterConstants.clearAllSign)
     }
     
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func testClearInput() {
+        
+        CalcLater.sharedInstance.input("9")
+        CalcLater.sharedInstance.input(CalcLaterConstants.clearSign)
+        let output = CalcLater.sharedInstance.output
+        
+        XCTAssertEqual(output, "0", "output should be zero after inputting clear")
     }
     
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measureBlock {
-            // Put the code you want to measure the time of here.
-        }
+    func testClearAllInput() {
+        CalcLater.sharedInstance.input("1")
+        CalcLater.sharedInstance.input(CalcLaterConstants.multiplySign)
+        CalcLater.sharedInstance.input("5")
+        CalcLater.sharedInstance.input(CalcLaterConstants.equalsSign)
+        CalcLater.sharedInstance.input(CalcLaterConstants.clearAllSign)
+        let output = CalcLater.sharedInstance.output
+        
+        XCTAssertEqual(output, "", "output should be nothing")
     }
     
+    func testInitialInputEquals() {
+        CalcLater.sharedInstance.input("=")
+        let output = CalcLater.sharedInstance.output
+        
+        XCTAssertEqual(output, "", "there should be no output characters")
+    }
+    
+    func testInputDigit() {
+        let number: Double = 1
+        let digit = "\(number)"
+        CalcLater.sharedInstance.input(digit)
+        let output = CalcLater.sharedInstance.output
+        XCTAssertEqual(number, Double(output)!, "output should equal input")
+    }
 }
