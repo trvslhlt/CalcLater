@@ -13,22 +13,57 @@ import XCTest
 // All tests assume valid input sequences
 class CalcLaterEngineTests: XCTestCase {
 
-    func testThis() {
-        
-        let sequence: [CalcLaterSymbol] = [.Two, .PlusSign, .One, .Two, .DecimalSign, .Nine]
-        let tailSequence = CalcLaterSymbol.tailDigitSequence(sequence)
-        
-        XCTAssert(true)
+//    func testThis() {
+//        
+//        let sequence: [CalcLaterSymbol] = [.Two, .PlusSign, .One, .Two, .DecimalSign, .Nine]
+//        let tailSequence = CalcLaterSymbol.tailDigitSequence(sequence)
+//        
+//        XCTAssert(true)
+//    }
+
+    func testSequenceEndingInArithmeticOperator() {
+        // 7 6 . 9 x
+        let sequence = [CalcLaterSymbol.Seven, .Six, .DecimalSign, .Nine, .PlusSign]
+        let result = CalcLaterEngine.computeExpressionValue(sequence)
+        let expectation = "76.9"
+        XCTAssertEqual(result, expectation, "the result should contain two digits followed by a decimal and another digit")
     }
     
-//    func testSingleDigitSequence() {
-//        // 1
-//        let sequence: [CalcLaterSymbol] = [.One]
-//        let result = CalcLaterEngine.computeExpressionValue(sequence)
-//        let expectation = "1"
-//        
-//        XCTAssertEqual(result, expectation, "the result should be the digit value")
-//    }
+    func testMultiDigitSequenceContainingDecimal() {
+        // 7 6 . 9
+        let sequence = [CalcLaterSymbol.Seven, .Six, .DecimalSign, .Nine]
+        let result = CalcLaterEngine.computeExpressionValue(sequence)
+        let expectation = "76.9"
+        XCTAssertEqual(result, expectation, "the result should contain two digits followed by a decimal and another digit")
+    }
+    
+    func testMultiDigitSequenceEndingInDecimal() {
+        // 7 6 .
+        let sequence = [CalcLaterSymbol.Seven, CalcLaterSymbol.Six, CalcLaterSymbol.DecimalSign]
+        let result = CalcLaterEngine.computeExpressionValue(sequence)
+        let expectation = "76."
+        XCTAssertEqual(result, expectation, "the result should contain two digits followed by a decimal")
+    }
+
+    
+    func testMultiDigitSequence() {
+        // 7 6
+        let sequence = [CalcLaterSymbol.Seven, CalcLaterSymbol.Six]
+        let result = CalcLaterEngine.computeExpressionValue(sequence)
+        let expectation = "76"
+        XCTAssertEqual(result, expectation, "the result should contain two digits")
+    }
+    
+    func testSingleDigitSequence() {
+        // 1
+        let sequence: [CalcLaterSymbol] = [.One]
+        let result = CalcLaterEngine.computeExpressionValue(sequence)
+        let expectation = "1"
+        
+        XCTAssertEqual(result, expectation, "the result should be the digit value")
+    }
+    
+
 
     func testPerformanceExample() {
         // This is an example of a performance test case.
