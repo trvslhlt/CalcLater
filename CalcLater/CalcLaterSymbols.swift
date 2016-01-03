@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 enum CalcLaterSymbol: String {
     
@@ -99,11 +100,22 @@ extension CalcLaterSymbol {
         } else {
             return []
         }
+        
+        let views = [""]
+        let superviews = views.getSuperviews()
+        
+        print(views, superviews)
     }
 }
 
 
 //TODO: Attempt at extending [CalcLaterSymbol]. This would be better than the current solution
+
+extension Array where Element: String {
+    func getSuperviews() -> [UIView] {
+        return [UIView]()
+    }
+}
 
 //extension Array where Element: CalcLaterSymbol {
 //    func lastIsDigit() -> Bool {
@@ -136,6 +148,8 @@ extension CalcLaterSymbol {
 //        }
 //    }
 //}
+
+
 
 
 

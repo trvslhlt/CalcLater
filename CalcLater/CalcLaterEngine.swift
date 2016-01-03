@@ -10,7 +10,7 @@ import Foundation
 
 struct CalcLaterEngine: ExpressionEngine {
     
-    static func computeExpressionValue(symbols: [CalcLaterSymbol]) -> String {
+    static func computeOutputvalueForSequence(symbols: [CalcLaterSymbol]) -> String {
         guard let last = symbols.last else { return "" }
         
         if CalcLaterSymbol.lastIsDigit(symbols) || CalcLaterSymbol.lastIsDecimal(symbols) {
@@ -19,6 +19,14 @@ struct CalcLaterEngine: ExpressionEngine {
         } else if CalcLaterSymbol.arithmeticOperatorSet.contains(last) {
             return computeExpressionValue(Array(symbols.dropLast()))
         }
+        return "TEST"
+    }
+    
+//    private static func convertSequenceToValidExpression(sequence: [CalcLaterSymbol]) -> [CalcLaterSymbol] {
+//        3
+//    }
+    
+    private static func computeExpressionValue(symbols: [CalcLaterSymbol]) -> String {
         return "TEST"
     }
     

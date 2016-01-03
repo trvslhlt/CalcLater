@@ -9,5 +9,5 @@
 import Foundation
 
 protocol ExpressionEngine {
-    static func computeExpressionValue(symbols: [CalcLaterSymbol]) -> String
+    static func computeOutputvalueForSequence(symbols: [CalcLaterSymbol]) -> String 
 }
